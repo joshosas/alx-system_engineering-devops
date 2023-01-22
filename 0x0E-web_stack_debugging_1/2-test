@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Command to make an nginx server listen on port 80
+apt-get -y update
+apt-get upgrade -y
+apt-get install nginx -y
+service nginx start
+sed -i 's/listen [::]:80 default_server;/listen 0.0.0.0:80;/g' /etc/nginx/sites-available/default
+service nginx restart
