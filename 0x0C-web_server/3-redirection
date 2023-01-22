@@ -3,7 +3,9 @@
 
 apt-get -y update
 apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo 'Best School' > /var/www/html/index.nginx-debian.html
-sed -i '/listen 80 default_server;/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
-service nginx start
+touch /etc/nginx/conf.d/redirect.conf
+
+# Add the redirection rule to the new configuration file
+echo "server {listen 80; 77125-web-01 _; location /redirect_me {return 301 http://google.com;}}" >> /etc/nginx/conf.d/redirect.conf
+nginx -t
+/etc/init.d/nginx restart
