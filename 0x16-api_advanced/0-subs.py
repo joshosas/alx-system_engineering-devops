@@ -1,25 +1,20 @@
 #!/usr/bin/python3
+""" Function that queries the Reddit API """
 import requests
+import sys
 
 
 def number_of_subscribers(subreddit):
-    """Write a function that queries the Reddit API and returns
-    the number of subscribers (not active users, total subscribers)
-    for a given subreddit"""
+    """  Args:
+        subreddit: subreddit name
+    Returns:
+        number of subscribers to the subreddit,
+        or 0 if subreddit requested is invalid"""
+    headers = {'User-Agent': 'xica369'}
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    base_url = "http://www.reddit.com/r/{:s}/about.json".format(subreddit)
-    headers = {'user-agent': 'egsyquest'}
-    r = requests.get(base_url, headers=headers)
+    if response.status_code == 200:
+        return (response.json().get("data").get("subscribers"))
+    return (0)
 
-    if (r.status_code == 300):
-        return 0
-    if (r.status_code == 301):
-        return 0
-    if (r.status_code == 302):
-        return 0
-    if (r.status_code == 303):
-        return 0
-    if (r.status_code == 404):
-        return 0
-
-    return r.json()['data'].get('subscribers', 0)
